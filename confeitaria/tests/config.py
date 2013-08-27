@@ -1,6 +1,6 @@
 import unittest2 as unittest
 
-import confeitaria.util.config as config
+import confeitaria.config as config
 
 class ConfigTestCase(unittest.TestCase):
 
