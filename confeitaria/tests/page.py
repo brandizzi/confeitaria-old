@@ -1,8 +1,10 @@
 import unittest2 as unittest
+from multiprocessing import Process
 
 from confeitaria import Page
 
 import cherrypy
+import requests
 
 class PageTestCase(unittest.TestCase):
 
@@ -13,3 +15,24 @@ class PageTestCase(unittest.TestCase):
                 return 'ok'
 
         self.assertEqual('ok', TestPage().index())
+
+    def test_provide_http_server(self):
+        class TestPage(Page):
+            @cherrypy.expose
+            def index(self):
+                return 'ok'
+
+        page = TestPage()
+        p = Process(target=page.run)
+        try:
+            p.start()
+
+            result = requests.get('http://localhost:8080')
+
+            self.assertEqual(200, result.status_code)
+            self.assertEqual('ok', result.text)
+        except Exception as e:
+            self.fail(e)
+        finally:
+            p.terminate()
+
