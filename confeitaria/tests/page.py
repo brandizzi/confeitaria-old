@@ -1,3 +1,4 @@
+import time
 import unittest2 as unittest
 from multiprocessing import Process
 
@@ -26,6 +27,7 @@ class PageTestCase(unittest.TestCase):
         p = Process(target=page.run)
         try:
             p.start()
+            time.sleep(1)
 
             result = requests.get('http://localhost:8080')
 

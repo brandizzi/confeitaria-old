@@ -6,5 +6,9 @@ def get(key):
 def set(key, value):
     config_dict[key] = value
 
+    assert config_dict[key] == value
+
 def clear():
     config_dict.clear()
+
+    assert config_dict == {}
