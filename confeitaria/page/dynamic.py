@@ -10,3 +10,8 @@ class DynamicPage(Page):
     def js(self, path):
         path = os.path.join('js', path)
         return pkgutil.get_data(self.__class__.__module__, path)
+
+    @cherrypy.expose
+    def css(self, path):
+        path = os.path.join('css', path)
+        return pkgutil.get_data(self.__class__.__module__, path)
