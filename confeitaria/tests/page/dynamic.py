@@ -39,6 +39,7 @@ class DynamicPageHttpServerTestPage(unittest.TestCase):
         result = requests.get('http://localhost:8080/css/test.css')
 
         self.assertEqual(200, result.status_code)
+        self.assertTrue(result.headers['content-type'].startswith('text/css'))
         self.assertEqual(TEST_CSS_CONTENT, result.text)
 
     @classmethod
