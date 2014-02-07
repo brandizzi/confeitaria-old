@@ -1,2 +1,2 @@
 from .config import ConfigTestCase
-from .page import PageTestCase
+from .page import *
