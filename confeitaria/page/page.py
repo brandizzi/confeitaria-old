@@ -1,6 +1,9 @@
 import cherrypy
 
 class Page(object):
+    def __init__(self, path='/'):
+        self.path = path
+
     def run(self, config=None):
         if config == None:
             config = {

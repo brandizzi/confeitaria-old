@@ -38,3 +38,18 @@ class PageTestCase(unittest.TestCase):
         finally:
             p.terminate()
 
+    def test_has_path(self):
+        class TestPage(Page):
+            @cherrypy.expose
+            def index(self):
+                return 'ok'
+
+        self.assertEqual('/', TestPage().path)
+
+    def test_path_defined_on_init(self):
+        class TestPage(Page):
+            @cherrypy.expose
+            def index(self):
+                return 'ok'
+
+        self.assertEqual('/subdir/', TestPage(path='/subdir/').path)
