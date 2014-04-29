@@ -35,9 +35,11 @@ class Page(object):
     def __call__(self, *args, **kwargs):
         page = self
 
-        if args and hasattr(self, args[0]):
+        try:
             attr = getattr(self, args[0])
             if isinstance(attr, Page):
                 page = getattr(self, args[0])
+        except Exception as e:
+            page = self
 
         return page.index(*args, **kwargs)
