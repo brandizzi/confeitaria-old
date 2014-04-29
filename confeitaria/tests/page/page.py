@@ -11,11 +11,9 @@ class PageTestCase(unittest.TestCase):
 
     def test_extend(self):
         class TestPage(Page):
-            @cherrypy.expose
-            def index(self):
-                return 'ok'
+            pass
 
-        self.assertEqual('ok', TestPage().index())
+        self.assertIsNotNone(TestPage().index())
 
     def test_provide_http_server(self):
         class TestPage(Page):
