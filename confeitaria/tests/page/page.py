@@ -47,3 +47,14 @@ class PageTestCase(unittest.TestCase):
             pass
 
         self.assertEqual('/subdir/', TestPage(path='/subdir/').path)
+
+    def test_append_parent_node_path(self):
+        class RootPage(Page):
+            pass
+        class LeafPage(Page):
+           pass
+
+        root = RootPage(path='/root/')
+        root.leaf = LeafPage()
+
+        self.assertEqual('/root/leaf/', root.leaf.path)

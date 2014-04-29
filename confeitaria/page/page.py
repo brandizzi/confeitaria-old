@@ -27,3 +27,7 @@ class Page(object):
             }
         cherrypy.quickstart(self, config=config)
 
+    def __setattr__(self, attribute_name, value):
+        if isinstance(value, Page):
+            value.path = self.path + attribute_name + '/'
+        object.__setattr__(self, attribute_name, value)
