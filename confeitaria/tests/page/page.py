@@ -92,3 +92,13 @@ class PageTestCase(unittest.TestCase):
             self.fail(e)
         finally:
             p.terminate()
+
+    def test_is_callable(self):
+        class TestPage(Page):
+            @cherrypy.expose
+            def index(self):
+                return 'ok'
+
+        page = TestPage()
+ 
+        self.assertIsNotNone(page(), page.index())

@@ -31,3 +31,13 @@ class Page(object):
         if isinstance(value, Page):
             value.path = self.path + attribute_name + '/'
         object.__setattr__(self, attribute_name, value)
+
+    def __call__(self, *args, **kwargs):
+        page = self
+
+        if args and hasattr(self, args[0]):
+            attr = getattr(self, args[0])
+            if isinstance(attr, Page):
+                page = getattr(self, args[0])
+
+        return page.index(*args, **kwargs)
