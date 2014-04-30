@@ -21,7 +21,10 @@ class ResourcePage(Page):
 
         resource_path = os.path.join(self.directory, resource)
 
-        return pkgutil.get_data(self.root, resource_path)
+        try:
+            return pkgutil.get_data(self.root, resource_path)
+        except IOError as e:
+            raise cherrypy.HTTPError(404)
 
     @property
     def root(self):

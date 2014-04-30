@@ -47,3 +47,23 @@ class ResourcePageTestCase(unittest.TestCase):
             self.fail(e)
         finally:
             p.terminate()
+
+    def test_404_not_found(self):
+        resource_page = ResourcePage(
+            root=__name__, directory='txt', content_type='text/plain'
+        )
+
+        p = Process(target=resource_page.run)
+        try:
+            p.start()
+            time.sleep(0.5)
+
+            result = requests.get('http://localhost:8080/no-such-file.txt')
+
+            self.assertEqual(404, result.status_code)
+        except AssertionError as e:
+            raise
+        except Exception as e:
+            self.fail(e)
+        finally:
+            p.terminate()
