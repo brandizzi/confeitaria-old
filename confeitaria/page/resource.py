@@ -6,12 +6,12 @@ from .page import Page
 
 class ResourcePage(Page):
 
-    def __init__(self, root, directory, content_type='text/plain',
+    def __init__(self, directory, content_type='text/plain', root=None,
             *args, **kwargs):
 
         Page.__init__(self, *args, **kwargs)
 
-        self.root = root
+        self._root = root
         self.directory = directory
         self.content_type = content_type
 
@@ -22,3 +22,12 @@ class ResourcePage(Page):
         resource_path = os.path.join(self.directory, resource)
 
         return pkgutil.get_data(self.root, resource_path)
+
+    @property
+    def root(self):
+        if self._root is not None:
+            return self._root
+        elif self.parent is not None:
+            return self.parent.__class__.__module__
+        else:
+            return self.__class__.__module__

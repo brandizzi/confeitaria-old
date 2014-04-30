@@ -3,7 +3,7 @@ import pkgutil
 import unittest2 as unittest
 from multiprocessing import Process
 
-from confeitaria import ResourcePage
+from confeitaria import Page, ResourcePage
 
 import cherrypy
 import requests
@@ -14,6 +14,17 @@ class ResourcePageTestCase(unittest.TestCase):
         txt_content = pkgutil.get_data(__name__, 'txt/test.txt')
         resource_page = ResourcePage(root=__name__, directory='txt')
         self.assertEqual(txt_content, resource_page.index('test.txt'))
+
+    def test_use_parent_resouce(self):
+        class TestPage(Page):
+            pass
+
+        page = TestPage()
+        page.txt = ResourcePage(directory='txt')
+
+        txt_content = pkgutil.get_data(__name__, 'txt/test.txt')
+
+        self.assertEqual(txt_content, page.txt.index('test.txt'))
 
     def test_set_content_type(self):
         resource_page = ResourcePage(
