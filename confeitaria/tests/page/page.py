@@ -108,3 +108,19 @@ class PageTestCase(unittest.TestCase):
             pass
  
         self.assertTrue(TestPage().exposed)
+
+    def test_none_parent(self):
+        page = Page(path='/root/')
+        self.assertIsNone(page.parent)
+
+    def test_set_parent(self):
+        class RootPage(Page):
+            pass
+        class LeafPage(Page):
+           pass
+
+        root = RootPage(path='/root/')
+        leaf = LeafPage()
+        root.leaf = leaf
+
+        self.assertEqual(root, leaf.parent)

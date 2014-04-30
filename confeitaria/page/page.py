@@ -4,6 +4,7 @@ class Page(object):
     def __init__(self, path='/'):
         self.exposed = True
         self.path = path
+        self.parent = None
 
     @cherrypy.expose
     def index(self, *args, **kwargs):
@@ -29,8 +30,9 @@ class Page(object):
         cherrypy.quickstart(self, config=config)
 
     def __setattr__(self, attribute_name, value):
-        if isinstance(value, Page):
+        if isinstance(value, Page) and attribute_name != 'parent':
             value.path = self.path + attribute_name + '/'
+            value.parent = self
         object.__setattr__(self, attribute_name, value)
 
     def __call__(self, *args, **kwargs):
