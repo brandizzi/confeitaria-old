@@ -3,17 +3,17 @@ import pkgutil
 import cherrypy
 
 from .page import Page
+from .resource import ResourcePage
 
 class DynamicPage(Page):
 
-    @cherrypy.expose
-    def js(self, path):
-        path = os.path.join('js', path)
-        return pkgutil.get_data(self.__class__.__module__, path)
+    def __init__(self, *args, **kwargs):
+        Page.__init__(self, *args, **kwargs)
 
-    @cherrypy.expose
-    def css(self, path):
-        cherrypy.response.headers['Content-Type']= 'text/css'
-
-        path = os.path.join('css', path)
-        return pkgutil.get_data(self.__class__.__module__, path)
+        module = self.__class__.__module__
+        self.js = ResourcePage(
+            root=module, directory='js', content_type='application/javascript'
+        )
+        self.css = ResourcePage(
+            root=module, directory='css', content_type='text/css'
+        )

@@ -18,13 +18,13 @@ class DynamicPageTestCase(unittest.TestCase):
         class TestPage(DynamicPage):
             pass
         
-        self.assertEqual(TEST_JS_CONTENT, TestPage().js('test.js'))
+        self.assertEqual(TEST_JS_CONTENT, TestPage().js.index('test.js'))
 
     def test_retrieve_css(self):
         class TestPage(DynamicPage):
             pass
 
-        self.assertEqual(TEST_CSS_CONTENT, TestPage().css('test.css'))
+        self.assertEqual(TEST_CSS_CONTENT, TestPage().css.index('test.css'))
 
 
 class DynamicPageHttpServerTestPage(unittest.TestCase):
