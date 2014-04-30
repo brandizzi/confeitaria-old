@@ -102,3 +102,9 @@ class PageTestCase(unittest.TestCase):
         page = TestPage()
  
         self.assertIsNotNone(page(), page.index())
+
+    def test_is_exposed(self):
+        class TestPage(Page):
+            pass
+ 
+        self.assertTrue(TestPage().exposed)

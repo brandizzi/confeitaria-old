@@ -2,6 +2,7 @@ import cherrypy
 
 class Page(object):
     def __init__(self, path='/'):
+        self.exposed = True
         self.path = path
 
     @cherrypy.expose
